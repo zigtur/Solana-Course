@@ -15,6 +15,8 @@ async function getBalanceUsingWeb3(address: PublicKey): Promise<number> {
 ```
 
 ### Write Data To The Solana Network
+Look at `Module1/solana-ping-client` directory.
+
 
 
 
