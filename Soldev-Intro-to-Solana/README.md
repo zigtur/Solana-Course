@@ -58,6 +58,15 @@ A Program may require that the Accounts provided within an Instruction are Signe
 - Signers: A Signer Account is required to sign the Transaction for the Instruction to be successful. By attaching a signature, users can prove that they are the owner of the Account.
 - Writable: A Writable Account will be mutated by the Instruction. This information is important for the blockchain to know which Transactions can be run in parallel and which ones can't.
 
+Then, there are 4 scenarios:
+- Non-Signer and Non-Writable: This Account is only used to read data. We cannot mutate it and we cannot make any assumption about its ownership.
+- Signer and Non-Writable: This Account can also not be mutated, but we know that the user who sent the Transaction owns its private key. This enables Programs to grant or deny access to certain actions.
+- Signer and Writable: This Account has both signed the Transaction and it can be mutated by the Instruction. This combination is pretty common since Programs will usually require the owner of an Account to prove who they are before mutating that account. Otherwise, anyone could mutate any Account they don't own.
+- Non-Signer and Writable: This Account can be mutated, but we can't make any assumption about its ownership. That usually means that the Program is using other Signer Accounts to prove they can mutate that one. This is also the case for PDA Accounts since they are owned by the Program and, as such, they require the Program to keep track of Authorities that can mutate them. Also, note that certain actions like crediting lamports to an Account do not require the Account to sign the Transaction.
+
+### Cross-Program Invocations (CPI)
+Cross-Program Invocations allow Programs to execute nested Instructions within their Instructions. They can use Instructions from their own Program and/or from other Programs.
+
 
 # Intro to Solana
 https://www.soldev.app/course
